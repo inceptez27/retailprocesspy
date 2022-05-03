@@ -4,7 +4,7 @@ from datetime import datetime
 
 def curateprocess(spark,prop):
     spark.sql("DROP DATABASE IF EXISTS retail_curated CASCADE")
-    spark.sql("create database if not exists retail_curated")
+    spark.sql("create database if not exists retail_curated location '/user/hive/warehouse/retail_curated'")
     print("====curation process started at " , datetime.now())
     
     dfproduct = spark.sql("""select p.ProductKey,p.ProductName,p.ModelName,p.ProductDescription,p.ProductColor,p.ProductSize,p.ProductStyle,p.ProductCost,p.ProductPrice,

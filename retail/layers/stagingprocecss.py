@@ -6,7 +6,7 @@ def stageprocess(spark,prop):
 
     #create database
     spark.sql("DROP DATABASE IF EXISTS retail_stg CASCADE")
-    spark.sql("create database if not exists retail_stg")
+    spark.sql("create database if not exists retail_stg  location '/user/hive/warehouse/retail_stg'")
     
     if (prop.get("srctype").strip() == "S3"):
         spark.sparkContext.hadoopConfiguration.set("fs.s3a.awsAccessKeyId", prop.get("fs.s3a.awsAccessKeyId"))

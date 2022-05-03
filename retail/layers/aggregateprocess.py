@@ -7,7 +7,7 @@ def aggrprocess(spark,prop):
    
     #product wise aggregated data
     spark.sql("DROP DATABASE IF EXISTS retail_agg CASCADE")
-    spark.sql("create database if not exists retail_agg")
+    spark.sql("create database if not exists retail_agg  location '/user/hive/warehouse/retail_agg'")
     
     dfsales = spark.sql("""select s.Order_Date,sum(s.OrderQuantity) orderquantity,sum(p.ProductCost) productcost,sum(p.ProductPrice) productprice 
     from retail_curated.tblsales_dtl s inner join  retail_curated.tblproduct_dtl p on s.ProductKey = p.ProductKey group by s.Order_Date""")
