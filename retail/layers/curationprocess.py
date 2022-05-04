@@ -21,8 +21,9 @@ def curateprocess(spark,prop):
                                 EducationLevel,Occupation,HomeOwner,load_dt from retail_stg.tblcustomer_stg""")
     
     dfcustomer1 = dfcustomer.withColumn("Birth_Date",to_date(dfcustomer["BirthDate"],"M/d/yyyy")) \
-                                .withColumn("Annual_Income",regexp_replace(regexp_replace(regexp_replace("AnnualIncome","\\$",""),","),"").cast("int")) \
-                                .drop("BirthDate","AnnualIncome")
+                                .drop("BirthDate")
+                                #.withColumn("Annual_Income",regexp_replace(regexp_replace(regexp_replace("AnnualIncome","\\$"),""),","),"").cast("int")) \
+                                
     
     dfcustomer1.write.mode("overwrite").partitionBy("load_dt").saveAsTable("retail_curated.tblcustomer_dtl")
     
