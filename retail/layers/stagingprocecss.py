@@ -49,7 +49,7 @@ def readfileandwriteintostaging(spark,filename,tablename):
       
     df1 = df.withColumn("load_dt", current_date())
     
-    df1.show()  
+    #df1.show()  
       
     #write data into hive table
     df1.write.mode("overwrite").saveAsTable(tablename)
