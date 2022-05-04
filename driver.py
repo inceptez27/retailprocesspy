@@ -10,6 +10,7 @@ def main():
         prop = getconfiginfo('app.properties')
         spark = SparkSession.builder \
             .config("hive.metastore.uris",prop.get("thriftserverurl")) \
+            .config("spark.sql.warehouse.dir","/user/hive/warehouse") \
             .appName("Retail-coreengine") \
             .config("spark.sql.debug.maxToStringFields", 1000) \
             .enableHiveSupport() \
