@@ -27,7 +27,7 @@ def main():
         curationprocess.curateprocess(spark,prop)
           
         #==================aggregation load =====================
-        aggregateprocess.aggrprocess(spark,prop)
+        #aggregateprocess.aggrprocess(spark,prop)
         
         print("======process completed at " , datetime.now())
         endtime = datetime.now()

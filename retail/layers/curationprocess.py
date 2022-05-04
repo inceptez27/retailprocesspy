@@ -11,7 +11,7 @@ def curateprocess(spark,prop):
     pc.CategoryName,ps.SubcategoryName,p.load_dt from retail_stg.tblproduct_stg p inner join retail_stg.tblproductsubcategory_stg ps on p.ProductSubcategoryKey=ps.ProductSubcategoryKey
     inner join retail_stg.tblproductcategory_stg pc on ps.ProductCategoryKey = pc.ProductCategoryKey""")
     
-    dfproduct1 = dfproduct.withColumn("profit", dfproduct("ProductPrice") - dfproduct("ProductCost"))
+    dfproduct1 = dfproduct.withColumn("profit", dfproduct["ProductPrice"] - dfproduct["ProductCost"])
     
     dfproduct1.write.mode("overwrite").partitionBy("load_dt").saveAsTable("retail_curated.tblproduct_dtl")
     
@@ -20,7 +20,7 @@ def curateprocess(spark,prop):
     dfcustomer = spark.sql("""select CustomerKey,Prefix,FirstName,LastName,BirthDate,MaritalStatus,Gender,EmailAddress,AnnualIncome,TotalChildren,
                                 EducationLevel,Occupation,HomeOwner,load_dt from retail_stg.tblcustomer_stg""")
     
-    dfcustomer1 = dfcustomer.withColumn("Birth_Date",to_date(dfcustomer("BirthDate"),"M/d/yyyy")) \
+    dfcustomer1 = dfcustomer.withColumn("Birth_Date",to_date(dfcustomer["BirthDate"],"M/d/yyyy")) \
                                 .withColumn("Annual_Income",regexp_replace(regexp_replace(regexp_replace("AnnualIncome"),"\\$",""),",","").cast("int")) \
                                 .drop("BirthDate","AnnualIncome")
     
@@ -31,8 +31,8 @@ def curateprocess(spark,prop):
     #Sales data process
     dfsales = spark.sql("""select OrderDate,StockDate,OrderNumber,ProductKey,CustomerKey,TerritoryKey,OrderLineItem,OrderQuantity,load_dt from retail_stg.tblsales_stg""")
     
-    dfsales1 = dfsales.withColumn("Order_Date",to_date(dfsales("OrderDate"),"M/d/yyyy")) \
-     .withColumn("Stock_Date",to_date(dfsales("StockDate"),"M/d/yyyy")) \
+    dfsales1 = dfsales.withColumn("Order_Date",to_date(dfsales["OrderDate"],"M/d/yyyy")) \
+     .withColumn("Stock_Date",to_date(dfsales["StockDate"],"M/d/yyyy")) \
      .drop("OrderDate","StockDate")
      
     dfsales1.write.mode("overwrite").partitionBy("load_dt").saveAsTable("retail_curated.tblsales_dtl")
