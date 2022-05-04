@@ -24,10 +24,10 @@ def main():
         stagingprocecss.stageprocess(spark,prop)
         
         #==================curation process======================
-        #curationprocess.curateprocess(spark,prop)
+        curationprocess.curateprocess(spark,prop)
           
         #==================aggregation load =====================
-        #aggregateprocess.aggrprocess(spark,prop)
+        aggregateprocess.aggrprocess(spark,prop)
         
         print("======process completed at " , datetime.now())
         endtime = datetime.now()
